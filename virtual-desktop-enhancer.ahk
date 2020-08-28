@@ -46,9 +46,12 @@ VWMess(wParam, lParam, msg, hwnd) {
 ; Set up tray tray menu
 
 Menu, Tray, NoStandard
-Menu, Tray, Add, &Manage Desktops, OpenDesktopManager
-Menu, Tray, Default, &Manage Desktops
-Menu, Tray, Add, Reload Settings, Reload
+Menu, Tray, Add, &Reload, Reload
+Menu, Tray, Default, &Reload
+Menu, Tray, Add ; separator
+Menu, Tray, Add, Config, Config
+Menu, Tray, Add, Edit, Edit
+Menu, Tray, Add ; separator
 Menu, Tray, Add, Exit, Exit
 Menu, Tray, Click, 1
 
