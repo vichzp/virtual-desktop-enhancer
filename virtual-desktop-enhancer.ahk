@@ -81,7 +81,7 @@ global TaskbarIDs                             := []
 global TaskbarEdges                           := []
 global previousDesktopNo                      := 0
 global doFocusAfterNextSwitch                 := 0
-global numberedHotkeys                        := 1
+global numberedHotkeys                        := {}
 global changeDesktopNamesPopupTitle           := "Windows 10 Virtual Desktop Enhancer"
 global changeDesktopNamesPopupText            := "Change the desktop name of desktop #{:d}"
 
@@ -189,9 +189,11 @@ while (i <= numDesktops) {
     }
     i := i + 1
 }
+
 if (!(GeneralUseNativeDesktopSwitching && _IsPrevNextDesktopSwitchingKeyboardShortcutConflicting(hkModifiersSwitchDir, hkIdentifierPrevious))) {
     setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersSwitchDir, hkIdentifierPrevious, "OnShiftLeftPress", "[KeyboardShortcutsModifiers] SwitchDesktopDir, [KeyboardShortcutsIdentifiers] PreviousDesktop")
 }
+
 if (!(GeneralUseNativeDesktopSwitching && _IsPrevNextDesktopSwitchingKeyboardShortcutConflicting(hkModifiersSwitchDir, hkIdentifierNext))) {
     setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersSwitchDir, hkIdentifierNext, "OnShiftRightPress", "[KeyboardShortcutsModifiers] SwitchDesktopDir, [KeyboardShortcutsIdentifiers] NextDesktop")
 }
