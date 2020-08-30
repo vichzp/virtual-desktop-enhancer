@@ -44,18 +44,6 @@ VWMess(wParam, lParam, msg, hwnd) {
 ; Auto Execute
 ; ======================================================================
 
-; Set up tray tray menu
-
-Menu, Tray, NoStandard
-Menu, Tray, Add, &Reload, Reload
-Menu, Tray, Default, &Reload
-Menu, Tray, Add ; separator
-Menu, Tray, Add, Config, Config
-Menu, Tray, Add, Edit, Edit
-Menu, Tray, Add ; separator
-Menu, Tray, Add, Exit, Exit
-Menu, Tray, Click, 1
-
 ; Read and groom settings
 
 ReadIni("settings.ini")
@@ -84,8 +72,32 @@ global doFocusAfterNextSwitch                 := 0
 global numberedHotkeys                        := {}
 global changeDesktopNamesPopupTitle           := "Windows 10 Virtual Desktop Enhancer"
 global changeDesktopNamesPopupText            := "Change the desktop name of desktop #{:d}"
+global numDesktops                            := _GetNumberOfDesktops()
+global initialDesktopNo                       := _GetCurrentDesktopNumber()
 
-initialDesktopNo := _GetCurrentDesktopNumber()
+; Set up tray tray menu
+Menu, Tray, NoStandard
+Menu, Tray, Click, 1
+
+Menu, Tray, Add, Reload
+Menu, Tray, Default, Reload
+Menu, Tray, Add ; separator
+Loop, %numDesktops% {
+    name := _GetDesktopName(A_Index)
+    switchTo := Func("SwitchToDesktop").Bind(A_Index)
+    Menu, Tray, Add, %name%, % SwitchTo, +Radio
+    if (initialDesktopNo == A_Index) {
+        Menu, Tray, Check, %name%
+    }
+}
+Menu, Tray, Add ; separator
+Menu, Tray, Add, Reload
+Menu, Tray, Default, Reload
+Menu, ScriptMenu, Add, Edit script, Edit
+Menu, ScriptMenu, Add, Config, Config
+Menu, ScriptMenu, Add ; separator
+Menu, ScriptMenu, Add, Exit, Exit
+Menu, Tray, Add, Script, :ScriptMenu
 
 if (GeneralDefaultDesktop != "" && GeneralDefaultDesktop > 0 && GeneralDefaultDesktop != initialDesktopNo) {
     SwitchToDesktop(GeneralDefaultDesktop)
@@ -172,8 +184,8 @@ setUpHotkeyWithCombo(combo, handler, settingPaths) {
 }
 
 i := 1
-numDesktops := Max(_GetNumberOfDesktops(), 10)
-while (i <= numDesktops) {
+maxDesktops := Max(numDesktops, 10)
+while (i <= maxDesktops) {
     hkDesktopI0 := KeyboardShortcutsIdentifiersDesktop%i%
     hkDesktopI1 := KeyboardShortcutsIdentifiersDesktopAlt%i%
     j := 0
@@ -500,9 +512,8 @@ _GetNumberOfDesktops() {
 }
 
 _GetNumberOfCyclableDesktops() {
-    numDesktops := _GetNumberOfDesktops()
     if (GeneralNumberOfCyclableDesktops >= 1) {
-        numDesktops := Min(numDesktops, GeneralNumberOfCyclableDesktops)
+        return Min(numDesktops, GeneralNumberOfCyclableDesktops)
     }
     return numDesktops
 }
@@ -513,6 +524,13 @@ _MoveCurrentWindowToDesktop(n := 1) {
 }
 
 _ChangeDesktop(n := 1) {
+    Loop, %numDesktops% {
+        Menu, Tray, Uncheck, % _GetDesktopName(A_Index)
+        if (n == A_Index) {            
+            nextName := DesktopNames%A_Index%
+            Menu, Tray, Check, %nextName%
+        }
+    }
     DllCall(GoToDesktopNumberProc, Int, n - 1)
 }
 
