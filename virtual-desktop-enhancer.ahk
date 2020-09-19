@@ -442,8 +442,8 @@ _IsCursorHoveringTaskbar() {
 	}
 
 	WinGetPos,, Y,, H, A
-	onBottomEgge := H - Y - posY - 1
-	if (Y == 0 && onBottomEgge == 0) {
+	onBottomEdge := H - Y - posY - 1
+	if (Y == 0 && onBottomEdge == 0) {
 		return true
 	}
 }
