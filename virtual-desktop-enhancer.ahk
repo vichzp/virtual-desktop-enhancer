@@ -443,7 +443,7 @@ _IsCursorHoveringTaskbar() {
 
 	WinGetPos,, Y,, H, A
 	onBottomEgge := H - Y - posY - 1
-	if (onBottomEgge == 0) {
+	if (Y == 0 && onBottomEgge == 0) {
 		return true
 	}
 }
