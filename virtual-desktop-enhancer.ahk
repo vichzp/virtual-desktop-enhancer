@@ -54,7 +54,6 @@ global GeneralUseNativeDesktopSwitching			:= (GeneralUseNativeDesktopSwitching ~
 global GeneralIconDir							:= GeneralIconDir == "" ? "icons/" : GeneralIconDir ~= "/$" ? GeneralIconDir : GeneralIconDir . "/"
 global TooltipsEnabled							:= (TooltipsEnabled != "" and TooltipsEnabled ~= "^[01]$") ? TooltipsEnabled : 1
 global TooltipsLifespan							:= (TooltipsLifespan != "" and TooltipsLifespan ~= "^\d+$") ? TooltipsLifespan : 750
-global TooltipsFadeOutAnimationDuration			:= (TooltipsFadeOutAnimationDuration != "" and TooltipsFadeOutAnimationDuration ~= "^\d+$") ? TooltipsFadeOutAnimationDuration : 100
 global TooltipsPositionX						:= (TooltipsPositionX == "LEFT" or TooltipsPositionX == "CENTER" or TooltipsPositionX == "RIGHT") ? TooltipsPositionX : "CENTER"
 global TooltipsPositionY						:= (TooltipsPositionY == "TOP" or TooltipsPositionY == "CENTER" or TooltipsPositionY == "BOTTOM") ? TooltipsPositionY : "CENTER"
 global TooltipsOnEveryMonitor					:= (TooltipsOnEveryMonitor != "" and TooltipsOnEveryMonitor ~= "^[01]$") ? TooltipsOnEveryMonitor : 1
