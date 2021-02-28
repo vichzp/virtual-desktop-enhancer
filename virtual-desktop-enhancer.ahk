@@ -410,11 +410,11 @@ Exit() {
 }
 
 Config() {
-	Run Notepad.exe %A_ScriptDir%/settings.ini
+	Run Notepad.exe -r "%A_ScriptDir%/settings.ini"
 }
 
 Edit() {
-	Run %A_ScriptDir%/../AutoGUI/AutoGUI.ahk
+	Run Notepad.exe -r "%A_ScriptDir%/virtual-desktop-enhancer.ahk"
 }
 
 _IsPrevNextDesktopSwitchingKeyboardShortcutConflicting(hkModifiersSwitch, hkIdentifierNextOrPrevious) {
