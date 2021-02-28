@@ -125,6 +125,9 @@ hkComboUnpinWin									:= KeyboardShortcutsCombinationsUnpinWindow
 hkComboTogglePinWin								:= KeyboardShortcutsCombinationsTogglePinWindow
 hkComboPinApp									:= KeyboardShortcutsCombinationsPinApp
 hkComboUnpinApp									:= KeyboardShortcutsCombinationsUnpinApp
+hkComboTogglePinOnTopWin						:= KeyboardShortcutsCombinationsTogglePinOnTop
+hkComboPinOnTopApp								:= KeyboardShortcutsCombinationsPinOnTop
+hkComboUnpinFromTop								:= KeyboardShortcutsCombinationsUnpinFromTop
 hkComboTogglePinApp								:= KeyboardShortcutsCombinationsTogglePinApp
 hkComboOpenDesktopManager						:= KeyboardShortcutsCombinationsOpenDesktopManager
 hkComboChangeDesktopName						:= KeyboardShortcutsCombinationsChangeDesktopName
@@ -152,6 +155,9 @@ for index in arrayS {
 	hkComboPinApp								:= RegExReplace(hkComboPinApp, arrayS[index], arrayR[index])
 	hkComboUnpinApp								:= RegExReplace(hkComboUnpinApp, arrayS[index], arrayR[index])
 	hkComboTogglePinApp							:= RegExReplace(hkComboTogglePinApp, arrayS[index], arrayR[index])
+	hkComboPinOnTopApp							:= RegExReplace(hkComboPinOnTopApp, arrayS[index], arrayR[index])
+	hkComboUnpinFromTop							:= RegExReplace(hkComboUnpinFromTop, arrayS[index], arrayR[index])
+	hkComboTogglePinOnTopWin					:= RegExReplace(hkComboTogglePinOnTopWin, arrayS[index], arrayR[index])
 	hkComboOpenDesktopManager					:= RegExReplace(hkComboOpenDesktopManager, arrayS[index], arrayR[index])
 	hkComboChangeDesktopName					:= RegExReplace(hkComboChangeDesktopName, arrayS[index], arrayR[index])
 }
@@ -162,7 +168,7 @@ for index in arrayS {
 setUpHotkey(hk, handler, settingPaths, n := 0) {
 	Hotkey, %hk%, %handler%, UseErrorLevel
 	if (ErrorLevel <> 0) {
-		MsgBox, 16, Error, One or more keyboard shortcut settings have been defined incorrectly in the settings file: `n%settingPaths%. `n`nPlease read the README for instructions.
+		MsgBox, 16, Error, %hk%, %handler%, `n`nOne or more keyboard shortcut settings have been defined incorrectly in the settings file: `n%settingPaths%. `n`nPlease read the README for instructions.
 		Exit
 	}
 	if (n) {
@@ -223,7 +229,9 @@ setUpHotkeyWithCombo(hkComboPinApp, "OnPinAppPress", "[KeyboardShortcutsCombinat
 setUpHotkeyWithCombo(hkComboUnpinApp, "OnUnpinAppPress", "[KeyboardShortcutsCombinations] UnpinApp")
 setUpHotkeyWithCombo(hkComboTogglePinApp, "OnTogglePinAppPress", "[KeyboardShortcutsCombinations] TogglePinApp")
 
-setUpHotkeyWithCombo(hkComboOpenDesktopManager, "OpenDesktopManager", "[KeyboardShortcutsCombinations] OpenDesktopManager")
+setUpHotkeyWithCombo(hkComboPinOnTopApp, "PinToTop", "[KeyboardShortcutsCombinations] PinToTop")
+setUpHotkeyWithCombo(hkComboUnpinFromTop, "UnpinFromTop", "[KeyboardShortcutsCombinations] UnpinFromTop")
+setUpHotkeyWithCombo(hkComboTogglePinOnTopWin, "ToggleOnTop", "[KeyboardShortcutsCombinations] ToggleOnTop")
 
 setUpHotkeyWithCombo(hkComboChangeDesktopName, "ChangeDesktopName", "[KeyboardShortcutsCombinations] ChangeDesktopName")
 
@@ -399,6 +407,26 @@ ChangeDesktopName() {
 		_SetDesktopName(currentDesktopNumber, newDesktopName)
 	}
 	_ChangeAppearance(currentDesktopNumber)
+}
+
+ToggleOnTop() {
+	WinGet, windowStyle, ExStyle, A
+	Winset, Alwaysontop, , A
+
+	WinGetTitle, activeWindow, A
+	_ShowTooltip((if (windowStyle & 0x8) ? "Unpin from top `n" : "Pin to top `n") . activeWindow)
+}
+
+PinToTop() {
+	Winset, Alwaysontop, On, A
+	WinGetTitle, activeWindow, A
+	_ShowTooltip("Pin to top `n" . activeWindow)
+}
+
+UnpinFromTop() {
+	Winset, Alwaysontop, Off, A
+	WinGetTitle, activeWindow, A
+	_ShowTooltip("Unpin from top `n" . activeWindow)
 }
 
 Reload() {
@@ -610,12 +638,12 @@ _ChangeBackground(n := 1) {
 
 _ChangeAppearance(n := 1) {
 	Menu, Tray, Tip, % _GetDesktopName(n)
-	iconFile := Icons%n% ? Icons%n% : n . ".ico"
+	iconFile := Icons%n% ? Icons%n% : n . ".png"
 	if (FileExist(GeneralIconDir . iconFile)) {
 		Menu, Tray, Icon, %GeneralIconDir%%iconFile%
 	}
 	else {
-		Menu, Tray, Icon, %GeneralIconDir%+.ico
+		Menu, Tray, Icon, %GeneralIconDir%+.png
 	}
 }
 
