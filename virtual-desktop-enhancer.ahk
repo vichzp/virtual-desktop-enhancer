@@ -77,16 +77,6 @@ global numDesktops								:= _GetNumberOfDesktops()
 global initialDesktopNo							:= _GetCurrentDesktopNumber()
 
 
-; Initialize
-
-if (GeneralDefaultDesktop != "" && GeneralDefaultDesktop > 0 && GeneralDefaultDesktop != initialDesktopNo) {
-	SwitchToDesktop(GeneralDefaultDesktop)
-} else {
-	; Call "OnDesktopSwitch" since it wouldn't be called otherwise
-	OnDesktopSwitch(initialDesktopNo)
-}
-
-
 ; ======================================================================
 ; Set up tray tray menu
 ; ======================================================================
@@ -144,6 +134,18 @@ EditScript() {
 
 OpenExplorer() {
 	Run explorer.exe "%A_ScriptDir%"
+}
+
+
+; ======================================================================
+; Initialize
+; ======================================================================
+
+if (GeneralDefaultDesktop != "" && GeneralDefaultDesktop > 0 && GeneralDefaultDesktop != initialDesktopNo) {
+	SwitchToDesktop(GeneralDefaultDesktop)
+} else {
+	; Call "OnDesktopSwitch" since it wouldn't be called otherwise
+	OnDesktopSwitch(initialDesktopNo)
 }
 
 
