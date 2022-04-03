@@ -6,6 +6,7 @@
 #UseHook
 
 ; Credits to Ciantic: https://github.com/Ciantic/VirtualDesktopAccessor
+; Credits to Scott McKay for windows 11 fixes: https://github.com/skottmckay/VirtualDesktopAccessor
 
 #Include, %A_ScriptDir%\libraries\read-ini.ahk
 #Include, %A_ScriptDir%\libraries\tooltip.ahk
@@ -20,7 +21,8 @@ DetectHiddenWindows, On
 hwnd := WinExist("ahk_pid " . DllCall("GetCurrentProcessId","Uint"))
 hwnd += 0x1000 << 32
 
-hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\libraries\virtual-desktop-accessor.dll", "Ptr")
+virtualDesktopAccessorDll := SubStr(A_OSVersion, 1, 2) == 11 ? "win-11.dll" : "win-10.dll"
+hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\libraries\virtual-desktop-accessor\" . virtualDesktopAccessorDll, "Ptr")
 
 global GoToDesktopNumberProc					:= DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GoToDesktopNumber", "Ptr")
 global RegisterPostMessageHookProc				:= DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "RegisterPostMessageHook", "Ptr")
