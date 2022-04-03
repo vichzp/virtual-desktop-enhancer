@@ -68,6 +68,7 @@ global TooltipsBackgroundColor					:= (TooltipsBackgroundColor != "" and Tooltip
 global isDisabled								:= 0
 global TaskbarIDs								:= []
 global TaskbarEdges								:= []
+global currentDesktopNo							:= 0
 global previousDesktopNo						:= 0
 global doFocusAfterNextSwitch					:= 0
 global numberedHotkeys							:= {}
@@ -439,11 +440,12 @@ OnDesktopSwitch(n := 1) {
 		_ChangeAppearance(n)
 		_ChangeBackground(n)
 
-		if (previousDesktopNo) {
-			_RunProgramWhenSwitchingFromDesktop(previousDesktopNo)
+		if (currentDesktopNo) {
+			_RunProgramWhenSwitchingFromDesktop(currentDesktopNo)
 		}
 		_RunProgramWhenSwitchingToDesktop(n)
-		previousDesktopNo := n
+		previousDesktopNo := currentDesktopNo
+		currentDesktopNo := n
 	}
 }
 
