@@ -164,6 +164,7 @@ global hkModifiersMoveDir						:= KeyboardShortcutsModifiersMoveWindowToDesktopD
 global hkModifiersMoveAndSwitchDir				:= KeyboardShortcutsModifiersMoveWindowAndSwitchToDesktopDir
 global hkIdentifierPrevious						:= KeyboardShortcutsIdentifiersPreviousDesktop
 global hkIdentifierNext							:= KeyboardShortcutsIdentifiersNextDesktop
+global hkIdentifierLastActive					:= KeyboardShortcutsIdentifiersLastActiveDesktop
 global hkComboPinWin							:= KeyboardShortcutsCombinationsPinWindow
 global hkComboUnpinWin							:= KeyboardShortcutsCombinationsUnpinWindow
 global hkComboTogglePinWin						:= KeyboardShortcutsCombinationsTogglePinWindow
@@ -235,12 +236,15 @@ _IsPrevNextDesktopSwitchingKeyboardShortcutConflicting(hkModifiersSwitch, hkIden
 	return ((hkModifiersSwitch == "<#<^" || hkModifiersSwitch == ">#<^" || hkModifiersSwitch == "#<^" || hkModifiersSwitch == "<#>^" || hkModifiersSwitch == ">#>^" || hkModifiersSwitch == "#>^" || hkModifiersSwitch == "<#^" || hkModifiersSwitch == ">#^" || hkModifiersSwitch == "#^") && (hkIdentifierNextOrPrevious == "Left" || hkIdentifierNextOrPrevious == "Right"))
 }
 
+_setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersSwitchDir, hkIdentifierLastActive, "OnShiftLastActivePress", "[KeyboardShortcutsModifiers] SwitchDesktopDir, [KeyboardShortcutsIdentifiers] LastActiveDesktop")
 
 _setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersMoveDir, hkIdentifierPrevious, "OnMoveLeftPress", "[KeyboardShortcutsModifiers] MoveWindowToDesktopDir, [KeyboardShortcutsIdentifiers] PreviousDesktop")
 _setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersMoveDir, hkIdentifierNext, "OnMoveRightPress", "[KeyboardShortcutsModifiers] MoveWindowToDesktopDir, [KeyboardShortcutsIdentifiers] NextDesktop")
+_setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersMoveDir, hkIdentifierLastActive, "OnMoveLastActivePress", "[KeyboardShortcutsModifiers] MoveWindowToDesktopNum, [KeyboardShortcutsIdentifiers] LastActiveDesktop")
 
 _setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersMoveAndSwitchDir, hkIdentifierPrevious, "OnMoveAndShiftLeftPress", "[KeyboardShortcutsModifiers] MoveWindowAndSwitchToDesktopDir, [KeyboardShortcutsIdentifiers] PreviousDesktop")
 _setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersMoveAndSwitchDir, hkIdentifierNext, "OnMoveAndShiftRightPress", "[KeyboardShortcutsModifiers] MoveWindowAndSwitchToDesktopDir, [KeyboardShortcutsIdentifiers] NextDesktop")
+_setUpHotkeyWithOneSetOfModifiersAndIdentifier(hkModifiersMoveAndSwitchDir, hkIdentifierLastActive, "OnMoveAndShiftLastActivePress", "[KeyboardShortcutsModifiers] MoveWindowAndSwitchToDesktopNum, [KeyboardShortcutsIdentifiers] LastActiveDesktop")
 
 _setUpHotkeyWithCombo(hkComboPinWin, "OnPinWindowPress", "[KeyboardShortcutsCombinations] PinWindow")
 _setUpHotkeyWithCombo(hkComboUnpinWin, "OnUnpinWindowPress", "[KeyboardShortcutsCombinations] UnpinWindow")
@@ -289,6 +293,25 @@ if (GeneralTaskbarScrollSwitching) {
 ; ======================================================================
 ; Event Handlers
 ; ======================================================================
+
+
+OnShiftLastActivePress() {
+	if (!isDisabled) {
+		SwitchToDesktop(previousDesktopNo)
+	}
+}
+
+OnMoveLastActivePress() {
+	if (!isDisabled) {
+		MoveToDesktop(previousDesktopNo)
+	}
+}
+
+OnMoveAndShiftLastActivePress() {
+	if (!isDisabled) {
+		MoveAndSwitchToDesktop(previousDesktopNo)
+	}
+}
 
 OnShiftNumberedPress() {
 	if (!isDisabled) {
