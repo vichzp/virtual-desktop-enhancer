@@ -541,8 +541,8 @@ UnpinFromTop() {
 ;-------------------------------------------------------------------------------
 #If isMousePos("Bottom") ; context for the following hotkeys
 ;-------------------------------------------------------------------------------
-    WheelUp::   SendInput, {RCtrl down}{RWin down}{Left}{RWin up}{RCtrl up}{Sleep 250}
-    WheelDown:: SendInput, {RCtrl down}{RWin down}{Right}{RWin up}{RCtrl up}{Sleep 250}
+    WheelUp::   SendInput, {RCtrl down}{RWin down}{Left}{RCtrl up}{RWin up}
+    WheelDown:: SendInput, {RCtrl down}{RWin down}{Right}{RCtrl up}{RWin up}
 
 #If ; end of context
 
