@@ -103,7 +103,7 @@ Loop, %numDesktops% {
 
 Menu, Tray, Add ; separator
 
-Menu, Tray, Add, Open in explorer, OpenExplorer
+Menu, Tray, Add, Explore config, OpenExplorer
 
 Menu, Tray, Add, Exit, ExitScript
 
