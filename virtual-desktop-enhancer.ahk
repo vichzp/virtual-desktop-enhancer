@@ -381,12 +381,14 @@ OnMoveAndShiftRightPress() {
 OnTaskbarScrollUp() {
 	if (!isDisabled && _IsCursorHoveringTaskbar()) {
 		OnShiftLeftPress()
+		Sleep 250 ; ms
 	}
 }
 
 OnTaskbarScrollDown() {
 	if (!isDisabled && _IsCursorHoveringTaskbar()) {
 		OnShiftRightPress()
+		Sleep 250 ; ms
 	}
 }
 
@@ -548,4 +550,31 @@ UnpinFromTop() {
 		WinGetTitle, activeWindow, A
 		_ShowTooltip("Unpin from top `n" . activeWindow)
 	}
+}
+
+;-------------------------------------------------------------------------------
+#If isMousePos("TopRight") ; context for the following hotkeys
+;-------------------------------------------------------------------------------
+    WheelUp::   SendInput, {RCtrl down}{RWin down}{Left}{RWin up}{RCtrl up}
+    WheelDown:: SendInput, {RCtrl down}{RWin down}{Right}{RWin up}{RCtrl up}
+
+#If ; end of context
+
+;-------------------------------------------------------------------------------
+isMousePos(Position, maxDistance := 3) { ; return true if mouse is in position
+;-------------------------------------------------------------------------------
+    CoordMode, Mouse, Screen
+    MouseGetPos, MouseX, MouseY
+
+    ; check all the edges
+    if InStr(Position, "Left")   and (maxDistance < MouseX)
+        return False
+    if InStr(Position, "Top")    and (maxDistance < MouseY) 
+        return False
+    if InStr(Position, "Right")  and (maxDistance < A_ScreenWidth - MouseX) 
+        return False
+    if InStr(Position, "Bottom") and (maxDistance < A_ScreenHeight - MouseY) 
+        return False
+    ; still here?
+    return True
 }
