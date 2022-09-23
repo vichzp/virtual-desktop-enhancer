@@ -367,14 +367,14 @@ OnMoveAndShiftRightPress() {
 OnTaskbarScrollUp() {
 	if (!isDisabled && _IsCursorHoveringTaskbar()) {
 		OnShiftLeftPress()
-		Sleep 250 ; ms
+		Sleep 200 ; ms
 	}
 }
 
 OnTaskbarScrollDown() {
 	if (!isDisabled && _IsCursorHoveringTaskbar()) {
 		OnShiftRightPress()
-		Sleep 250 ; ms
+		Sleep 200 ; ms
 	}
 }
 
@@ -541,8 +541,8 @@ UnpinFromTop() {
 ;-------------------------------------------------------------------------------
 #If isMousePos("Bottom") ; context for the following hotkeys
 ;-------------------------------------------------------------------------------
-    WheelUp::   SendInput, {RCtrl down}{RWin down}{Left}{RCtrl up}{RWin up}
-    WheelDown:: SendInput, {RCtrl down}{RWin down}{Right}{RCtrl up}{RWin up}
+    WheelUp::   SendInput, {RCtrl down}{RWin down}{Left}{RCtrl up}{RWin up}{Sleep 200}
+    WheelDown:: SendInput, {RCtrl down}{RWin down}{Right}{RCtrl up}{RWin up}{Sleep 200}
 
 #If ; end of context
 
