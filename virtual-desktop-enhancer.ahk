@@ -103,15 +103,9 @@ Loop, %numDesktops% {
 
 Menu, Tray, Add ; separator
 
-Menu, ScriptMenu, Add, Open in explorer, OpenExplorer
-Menu, ScriptMenu, Add, Edit script, EditScript
-Menu, ScriptMenu, Add, Edit config, EditConfig
+Menu, Tray, Add, Open in explorer, OpenExplorer
 
-Menu, ScriptMenu, Add ; separator
-
-Menu, ScriptMenu, Add, Exit, ExitScript
-
-Menu, Tray, Add, Script, :ScriptMenu
+Menu, Tray, Add, Exit, ExitScript
 
 Reload() {
 	Reload
@@ -125,14 +119,6 @@ DisableScript() {
 	isDisabled := isDisabled ? false : true
 	Menu, Tray, Togglecheck, Disable keys
 	_ShowTooltip(if isDisabled ? "Disabled" : "Enabled")
-}
-
-EditConfig() {
-	Run notepad.exe "%A_ScriptDir%/settings.ini"
-}
-
-EditScript() {
-	Run notepad.exe "%A_ScriptDir%/virtual-desktop-enhancer.ahk"
 }
 
 OpenExplorer() {
