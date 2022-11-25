@@ -21,7 +21,7 @@ DetectHiddenWindows, On
 hwnd := WinExist("ahk_pid " . DllCall("GetCurrentProcessId","Uint"))
 hwnd += 0x1000 << 32
 
-VirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\libraries\VirtualDesktopAccessor.dll", "Ptr")
+VirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\libraries\virtual-desktop-accessor\win-11.dll", "Ptr")
 
 global GoToDesktopNumberProc					:= DllCall("GetProcAddress", Ptr, VirtualDesktopAccessor, AStr, "GoToDesktopNumber", "Ptr")
 global RegisterPostMessageHookProc				:= DllCall("GetProcAddress", Ptr, VirtualDesktopAccessor, AStr, "RegisterPostMessageHook", "Ptr")
