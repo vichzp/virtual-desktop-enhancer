@@ -196,7 +196,7 @@ _ChangeAppearance(n := 1) {
 		Menu, Tray, Icon, %GeneralIconDir%%iconFile%
 	}
 	else {
-		Menu, Tray, Icon, %GeneralIconDir%+.png
+		; Menu, Tray, Icon, %GeneralIconDir%+.png
 	}
 }
 

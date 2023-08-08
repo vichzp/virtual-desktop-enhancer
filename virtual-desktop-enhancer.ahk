@@ -542,11 +542,11 @@ UnpinFromTop() {
 ;-------------------------------------------------------------------------------
     WheelUp::
       SwitchToDesktop(_GetPreviousDesktopNumber())
-      Sleep 250
+      Sleep 300
       Return
     WheelDown::
       SwitchToDesktop(_GetNextDesktopNumber())
-      Sleep 250
+      Sleep 300
       Return
 #If ; end of context
 
