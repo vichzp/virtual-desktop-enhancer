@@ -496,7 +496,7 @@ OpenDesktopManager() {
 
 ; Let the user change desktop names with a prompt, without having to edit the 'settings.ini'
 ; file and reload the program.
-; The changes are temprorary (names will be overwritten by the default values of
+; The changes are temprorary names will be overwritten by the default values of
 ; 'settings.ini' when the program will be restarted.
 ChangeDesktopName() {
 	if (!isDisabled) {
